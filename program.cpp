@@ -1,4 +1,3 @@
-#include "program.hpp"
 #include <errno.h>
 #include <fcntl.h>
 #include <pthread.h>
@@ -38,10 +37,9 @@ int main(int argc, char* argv[]) {
     signal(SIGSEGV, exitHandler);
     int status = 0;
 
-    if (argc != 2) {
-        quit("Need ID arg.");
+    if (argc != 1) {
+        quit("No arguments allowed.");
     }
-    char* id = argv[1];
 
     printf("Starting\n");
 
@@ -125,10 +123,10 @@ int main(int argc, char* argv[]) {
             quit("Error during mutex lock.");
         }
         for (uint i = 0; i < 5; i++) {
-            printf("Program %s simulating processing (%d/5)...\n", id, i + 1);
+            printf("Simulating processing (%d/5)...\n", i + 1);
             sleep(1);
         }
-        printf("Program %s done processing.\n", id);
+        printf("Done processing.\n");
         status = pthread_mutex_unlock(mutex);
         if (status != 0) {
             quit("Error during mutex unlock.");
